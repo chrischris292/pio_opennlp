@@ -1,3 +1,3 @@
 package io.prediction.opennlp.engine
 
-case class PredictedResult(sentiment: String) extends Serializable
+case class PredictedResult(interest: String) extends Serializable

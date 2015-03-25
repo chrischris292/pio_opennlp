@@ -13,9 +13,10 @@ class Algorithm(val ap: AlgorithmParams)
   }
 
   def predict(model: Model, query: Query): PredictedResult = {
-    val sentiment = Sentiment(
-      model.gis.getBestOutcome(model.gis.eval(query.sentence.split(" "))).toInt)
-    PredictedResult(sentiment.toString)
+    val interest = Interest(
+      model.gis.getBestOutcome(model.gis.eval(query.sentence.split(" "))).toInt
+    )
+    PredictedResult(interest.toString)
   }
 
   override def batchPredict(model: Model, qs: RDD[(Long, Query)]): RDD[(Long, PredictedResult)] = {

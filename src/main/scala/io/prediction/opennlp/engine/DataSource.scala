@@ -6,7 +6,7 @@ import java.io.FileReader
 import io.prediction.controller.EmptyEvaluationInfo
 import io.prediction.controller.EmptyParams
 import io.prediction.controller.PDataSource
-import io.prediction.opennlp.engine.Sentiment.Sentiment
+import io.prediction.opennlp.engine.Interest.Interest
 import opennlp.maxent.BasicEventStream
 import opennlp.maxent.PlainTextByLineDataStream
 import opennlp.model.OnePassDataIndexer
@@ -17,7 +17,7 @@ class DataSource(val dsp: DataSourceParams) extends PDataSource[
   TrainingData,
   EmptyEvaluationInfo,
   Query,
-  Sentiment] {
+  Interest] {
 
   val Separator = " "
 
@@ -30,14 +30,14 @@ class DataSource(val dsp: DataSourceParams) extends PDataSource[
   }
 
   override def readEval(
-    sc: SparkContext): Seq[(TrainingData, EmptyEvaluationInfo, RDD[(Query, Sentiment)])] = {
+    sc: SparkContext): Seq[(TrainingData, EmptyEvaluationInfo, RDD[(Query, Interest)])] = {
 
     val trainingData = readTraining(sc)
 
     val lines = scala.io.Source.fromFile(dsp.testPath.get).getLines()
     val qna = lines.map { line =>
       val lastSpace = line.lastIndexOf(Separator)
-      (Query(line.substring(0, lastSpace)), Sentiment(line.substring(lastSpace + 1).toInt))
+      (Query(line.substring(0, lastSpace)), Interest(line.substring(lastSpace + 1).toInt))
     }.toSeq
 
     Seq((trainingData, EmptyParams(), sc.parallelize(qna)))
