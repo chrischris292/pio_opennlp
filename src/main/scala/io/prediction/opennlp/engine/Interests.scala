@@ -331,7 +331,5 @@ val Politicsandsocialissues = Value(326)
 val Mensclothing = Value(327)
 val Hobbiesandactivities = Value(328)
 val Familyandrelationships = Value(329)
-
-
 }
 
