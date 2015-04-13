@@ -17,6 +17,8 @@ def sendData(args):
     while line!="": 
       print counter;
       RATING = 0;
+      print line.rstrip()
+      '''
       response = client.create_event(
           event="rate",
           entity_type="user",
@@ -24,6 +26,7 @@ def sendData(args):
           properties= { "tree" : line.rstrip()}
       )
       print response
+      '''
       #Read New Line
       counter = counter + 1;
       line = file.readline();
