@@ -1,8 +1,10 @@
-# Sentiment Analysis Template
+# OpenNLP Interests Template
 
-Given a sentence, return a score between 0 and 4, indicating the sentence's sentiment. 0 being very negative, 4 being very positive, 2 being neutral.
+Given a sentence, return a interest category (i.e. Sports, Games, News). 
 
-The engine uses the stanford CoreNLP library and the Scala binding `gangeli/CoreNLP-Scala` for parsing.
+Interest categories are based off of Facebook Tier 1 interests. 
+
+The engine uses the Apache OpenNLP library
 
 ## Versions
 
@@ -13,16 +15,25 @@ The engine uses the stanford CoreNLP library and the Scala binding `gangeli/Core
 ## import sample data
 
 ```
-$ python data/import_eventserver.py --access_key <your_access_key> --file data/train.tsv
+$ python data/import_eventserver.py --access_key <your_access_key> --file data/train.txt
 ```
 
-The sample training data comes from https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews. It is a tsv file. Each line contains 4 data, `PhraseId`, `SentenceId`, `Phrase` and `Sentiment`. 
+Use sample training data that has labeled sentences by category. Discretize the categories and label them accordingly in the event server. (
 
 For example,
 ```
-1	1	bad	1
+Russell Wilson is a super bowl quarterback	Sports	
 ```
+In the python script associate sports with 1
+```
+if interest == "Sports":
+interest = str(1)
+```
+Update the interest.scala code to associate sports with 1
 
+```
+val Sports = Value(1)
+```
 ## Step to build, train and deploy the engine
 
 ```
@@ -38,8 +49,8 @@ normal:
 ```
 $ curl -H "Content-Type: application/json" \
 -d '{
-  "s" : "I am happy"
-  }' \
+"s" : "I am happy"
+}' \
 http://localhost:8000/queries.json \
 -w %{time_connect}:%{time_starttransfer}:%{time_total}
 
@@ -49,10 +60,11 @@ http://localhost:8000/queries.json \
 ```
 $ curl -H "Content-Type: application/json" \
 -d '{
-  "s" : "This movie sucks!"
-  }' \
+"s" : "This movie sucks!"
+}' \
 http://localhost:8000/queries.json \
 -w %{time_connect}:%{time_starttransfer}:%{time_total}
 
 {"sentiment":0.8000000001798788}0.005:0.031:0.031
 ```
+
