@@ -14,10 +14,11 @@ def sendData(args):
     file = open(args.file, "r")
     line = file.readline();
     counter = 1;
+    
     while line!="": 
       line = line.split(" ");
       interest =  str(" ".join(line[len(line)-1]));
-      subString =  str(" ".join(line[0:len(line)-1]));
+      subString =  str(" ".join(line[0:len(line)-1]));      
       response = client.create_event(
           event="$set",
           entity_type="phrase",
@@ -28,6 +29,7 @@ def sendData(args):
       )
       print response
       print counter;
+      
       #Read New Line
       counter = counter + 1;
       line = file.readline();
