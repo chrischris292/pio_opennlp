@@ -18,7 +18,7 @@ case class Model(gis: AbstractModel) extends IPersistentModel[AlgorithmParams] w
     val writer = new SuffixSensitiveGISModelWriter(gis, new File(s"/tmp/gis-$id"))
     writer.persist()
 
-    true
+    false
   }
 }
 
