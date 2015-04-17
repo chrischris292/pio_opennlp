@@ -33,9 +33,11 @@ class DataSource(val dsp: DataSourceParams) extends PDataSource[
 
     val qna = testingSet.map { line =>
       val lastSpace = line.lastIndexOf(Separator)
+      println("MAP")
+      println(Interest(line.substring(lastSpace + 1).toInt))
+
       (Query(line.substring(0, lastSpace)), Interest(line.substring(lastSpace + 1).toInt))
     }
-
     Seq((trainingData, EmptyParams(), sc.parallelize(qna)))
   }
 

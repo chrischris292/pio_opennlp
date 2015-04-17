@@ -17,7 +17,7 @@ def sendData(args):
     
     while line!="": 
       line = line.split(" ");
-      interest =  str(" ".join(line[len(line)-1]));
+      interest =  str(" ".join(line[len(line)-1]).replace("\n","").replace(" ",""));
       subString =  str(" ".join(line[0:len(line)-1]));      
       response = client.create_event(
           event="$set",
