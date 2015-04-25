@@ -38,7 +38,7 @@ class DataSource(val dsp: DataSourceParams) extends PDataSource[
 
       (Query(line.substring(0, lastSpace)), Interest(line.substring(lastSpace + 1).toInt))
     }
-    Seq((trainingData, EmptyParams(), sc.parallelize(qna)))
+    Seq((trainingData,EmptyParams() , sc.parallelize(qna)))
   }
 
   private def allPhraseandInterests(sc: SparkContext): Seq[String] = {
